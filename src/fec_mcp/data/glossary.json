@@ -1,0 +1,12 @@
+{
+  "PAC": "Political Action Committee. A 527 organization that pools campaign contributions from members and donates those funds to campaigns for or against candidates, ballot initiatives, or legislation.",
+  "Super PAC": "Independent Expenditure-Only Committee. These committees may receive unlimited contributions from individuals, corporations, labor unions and other PACs for the purpose of financing independent expenditures and other independent political activity.",
+  "Cash on Hand": "The total amount of money a campaign or committee has in the bank at the end of a reporting period.",
+  "Schedule A": "Itemized receipts. This includes contributions from individuals, PACs, and party committees.",
+  "Schedule B": "Itemized disbursements. This covers the expenditures made by the committee, including operating expenses, transfers, and contributions to other committees.",
+  "Schedule E": "Independent Expenditures. Money spent by Super PACs or other organizations to support or oppose a candidate, without coordinating with the candidate's campaign.",
+  "Form 3X (F3X)": "The Report of Receipts and Disbursements for a Political Committee other than an Authorized Committee. Used by PACs and party committees.",
+  "Form 3 (F3)": "The Report of Receipts and Disbursements for an Authorized Committee. Used by House and Senate campaigns.",
+  "Form 3P (F3P)": "The Report of Receipts and Disbursements for an Authorized Committee. Used by Presidential campaigns.",
+  "Dark Money": "Political spending by nonprofit organizations (e.g., 501(c)(4) groups) that are not required to disclose their donors. While the FEC tracks their expenditures, the source of their funding remains hidden."
+}
