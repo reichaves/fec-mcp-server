@@ -1,1 +1,7 @@
-
+{
+  "tip_search_candidates": "Use the candidate_id to query finances with get_candidate_finances()",
+  "tip_candidate_finances_past_cycle": "Use get_top_donors() and get_campaign_expenditures() with the committee_id for more details. Warning: if the returned cycle ({cycle_returned}) is different from the requested ({cycle_requested}), the data belongs to a past campaign.",
+  "tip_candidate_finances_normal": "Use get_top_donors() and get_campaign_expenditures() with the committee_id for more details",
+  "tip_search_committees": "Use get_top_donors() or get_independent_expenditures() with the committee_id",
+  "tip_filings": "Use document_url to access the original PDF on the FEC website"
+}
