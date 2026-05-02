@@ -1,5 +1,5 @@
 # FEC Campaign Finance MCP Server
-#### Autor: Reinaldo Chaves (reichaves@gmail.com)
+# Autor: Reinaldo Chaves (reichaves@gmail.com)
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/reichaves/fec-mcp-server)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
@@ -101,31 +101,40 @@ O `fec_mcp` foi desenhado estritamente para o princípio de **"Zero Alucinação
 
 ```
 fec-mcp-server/
-├── start_server.py              # Entry point: adiciona src/ ao path e chama main()
+├── README.md                    # Documentação principal em inglês
+├── README.pt-br.md              # Documentação principal em português
+├── .env.example                 # Exemplo de variáveis de ambiente (chaves de API, idioma)
+├── pyproject.toml               # Configuração do projeto e dependências modernas do Python
+├── requirements.txt             # Lista de dependências para instalação simples via pip
+├── start_server.py              # Entry point: adiciona src/ ao path e inicia o servidor MCP
 ├── src/fec_mcp/
 │   ├── main.py                  # Importa todos os módulos para registrar no FastMCP
 │   ├── server.py                # Cria a instância central `mcp = FastMCP(...)`
 │   ├── context.py               # Singleton `fec`: instância compartilhada do FECClient
-│   ├── client.py                # FECClient ativo: retry/backoff, timeouts por endpoint
-│   ├── fec_client.py            # FECClient legado (não usado pelo servidor)
-│   ├── logging_config.py        # Configuração de logging
+│   ├── client.py                # FECClient ativo: requisições HTTP, retry/backoff, timeouts
+│   ├── i18n.py                  # Sistema de internacionalização (carrega textos de /locales)
+│   ├── logging_config.py        # Configuração de logging e níveis de verbosidade
+│   ├── models.py                # Modelos de dados Pydantic para validação das respostas da API
 │   ├── tools/                   # Ferramentas MCP (@mcp.tool)
 │   │   ├── candidates.py        # search_candidates, get_candidate_finances
 │   │   ├── contributions.py     # search_contributions, get_top_donors, get_contributions_by_state
-│   │   ├── expenses.py          # get_campaign_expenditures, get_independent_expenditures, get_independent_expenditures_summary
-│   │   ├── filings.py           # get_candidate_filings, get_committee_filings
-│   │   ├── search.py            # search_pacs, search_committees_by_type
+│   │   ├── expenses.py          # get_campaign_expenditures, get_independent_expenditures, etc
+│   │   ├── filings.py           # get_campaign_filings para relatórios financeiros
+│   │   ├── search.py            # search_pacs para buscar comitês de ação política
 │   │   └── meta.py              # fec_help, suggest_investigation
 │   ├── resources/               # Recursos MCP (@mcp.resource)
-│   │   └── reference.py         # Códigos FEC, IDs notáveis, info da API
+│   │   └── reference.py         # Códigos FEC, IDs notáveis, glossário, info da API
 │   ├── prompts/                 # Prompts MCP (@mcp.prompt)
 │   │   └── investigation.py     # investigate_candidate, follow_the_money, compare_candidates
-│   └── data/                    # JSON estáticos carregados pelas tools
-│       ├── help.json            # Documentação e exemplos por tópico
-│       └── investigations.json  # Sugestões de pautas jornalísticas
+│   ├── data/                    # JSON estáticos usados pelas ferramentas
+│   │   ├── glossary.json        # Termos do glossário da FEC
+│   │   ├── help.json            # Documentação e exemplos por tópico para a ferramenta fec_help
+│   │   └── investigations.json  # Sugestões de pautas jornalísticas
+│   └── locales/                 # Arquivos de tradução
+│       ├── en.json              # Traduções em inglês
+│       └── pt.json              # Traduções em português
 └── tests/
-    ├── conftest.py              # Fixtures pytest: cliente mockado, env vars
-    └── test_server.py           # Testes de integração com respx (mock HTTP)
+    └── test_server.py           # Testes automatizados do cliente e endpoints usando pytest e respx
 ```
 
 ### Padrão de registro FastMCP

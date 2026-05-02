@@ -1,5 +1,5 @@
 # FEC Campaign Finance MCP Server
-#### Author: Reinaldo Chaves (reichaves@gmail.com)
+# Author: Reinaldo Chaves (reichaves@gmail.com)
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/reichaves/fec-mcp-server)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
@@ -64,6 +64,48 @@ In OSINT investigations, it is up to the AI agent or journalist to use `search_c
 ### Multi-language Support (i18n)
 
 The server supports internationalization. The default language for responses and tips is English. You can change this by setting the `FEC_MCP_LANG` environment variable (e.g., `FEC_MCP_LANG=pt-br`).
+
+---
+
+## Architecture
+
+```text
+fec-mcp-server/
+├── README.md                    # Main documentation in English
+├── README.pt-br.md              # Main documentation in Portuguese
+├── .env.example                 # Example environment variables (API keys, language)
+├── pyproject.toml               # Project configuration and modern Python dependencies
+├── requirements.txt             # List of dependencies for simple installation via pip
+├── start_server.py              # Entry point: adds src/ to path and starts the MCP server
+├── src/fec_mcp/
+│   ├── main.py                  # Imports all modules to register them in FastMCP
+│   ├── server.py                # Creates the central `mcp = FastMCP(...)` instance
+│   ├── context.py               # Singleton `fec`: shared instance of FECClient
+│   ├── client.py                # Active FECClient: HTTP requests, retry/backoff, timeouts
+│   ├── i18n.py                  # Internationalization system (loads text from /locales)
+│   ├── logging_config.py        # Logging configuration and verbosity levels
+│   ├── models.py                # Pydantic data models for validating API responses
+│   ├── tools/                   # MCP Tools (@mcp.tool)
+│   │   ├── candidates.py        # search_candidates, get_candidate_finances
+│   │   ├── contributions.py     # search_contributions, get_top_donors, get_contributions_by_state
+│   │   ├── expenses.py          # get_campaign_expenditures, get_independent_expenditures
+│   │   ├── filings.py           # get_campaign_filings for financial reports
+│   │   ├── search.py            # search_pacs for finding political action committees
+│   │   └── meta.py              # fec_help, suggest_investigation
+│   ├── resources/               # MCP Resources (@mcp.resource)
+│   │   └── reference.py         # FEC codes, notable IDs, glossary, API info
+│   ├── prompts/                 # MCP Prompts (@mcp.prompt)
+│   │   └── investigation.py     # investigate_candidate, follow_the_money, compare_candidates
+│   ├── data/                    # Static JSON files used by tools
+│   │   ├── glossary.json        # FEC glossary terms
+│   │   ├── help.json            # Documentation and examples by topic for fec_help
+│   │   └── investigations.json  # Journalism investigation pitches
+│   └── locales/                 # Translation files
+│       ├── en.json              # English translations
+│       └── pt.json              # Portuguese translations
+└── tests/
+    └── test_server.py           # Automated tests for the client and endpoints using pytest and respx
+```
 
 ---
 
