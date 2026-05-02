@@ -1,5 +1,5 @@
 # FEC Campaign Finance MCP Server
-# Author: Reinaldo Chaves (reichaves@gmail.com)
+##### Author: Reinaldo Chaves (reichaves@gmail.com)
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/reichaves/fec-mcp-server)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
