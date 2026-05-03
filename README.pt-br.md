@@ -24,6 +24,7 @@ Projetado para jornalistas de dados, pesquisadores e cidadãos que precisam expl
 - [Outras plataformas compatíveis](#outras-plataformas-compatíveis)
 - [Exemplos de uso](#exemplos-de-uso)
 - [Desenvolvimento e testes](#desenvolvimento-e-testes)
+- [Segurança](#segurança)
 
 ---
 
@@ -531,6 +532,31 @@ import fec_mcp.tools.minha_tool
 - **Latência**: endpoints de doações individuais (`schedule_a`) podem ser lentos (timeout configurado em 120s)
 - **Rate limit**: 1.000 requisições/hora com chave de API gratuita
 - **Defasagem**: dados podem estar 24–48h atrás dos filings mais recentes
+
+---
+
+## Segurança
+
+Este servidor roda **localmente** na sua máquina e faz requisições **somente de leitura** à API pública da FEC. Não manipula credenciais de usuário nem dados pessoais (PII).
+
+Práticas adotadas:
+- Guarde sua chave de API no `.env` apenas — nunca faça commit (`.env` está no `.gitignore`)
+- A chave de API é mascarada automaticamente em todo output de log (`SecretFilter`)
+- Logs rodam com rotação a 5 MB e estão excluídos do controle de versão
+- Nomes de arquivos lidos do disco são restritos a uma lista de permissões explícita
+
+Para o modelo de ameaças completo, declaração de compatibilidade com Skill Vetter/Socket/Snyk, instruções de auditoria de dependências e como reportar vulnerabilidades, veja [SECURITY.md](SECURITY.md).
+
+```bash
+# Auditar dependências por CVEs conhecidos
+pip-audit
+
+# Análise estática de segurança
+bandit -r src/
+
+# Rodar testes focados em segurança
+pytest tests/test_security.py -v
+```
 
 ---
 
