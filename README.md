@@ -1,5 +1,5 @@
 # FEC Campaign Finance MCP Server
-##### Author: Reinaldo Chaves (reichaves@gmail.com)
+# Author: Reinaldo Chaves (reichaves@gmail.com)
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/reichaves/fec-mcp-server)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
@@ -25,6 +25,7 @@ Designed for data journalists, researchers, and citizens who need to explore com
 - [Configuration](#configuration)
 - [Usage Examples](#usage-examples)
 - [Development and Tests](#development-and-tests)
+- [Security](#security)
 
 ---
 
@@ -187,6 +188,31 @@ The prompt `compare_candidates` generates a complete table with all metrics side
 - **Dark money**: Donations to 501(c)(4) are not disclosed to the FEC.
 - **Latency**: Individual donation endpoints (`schedule_a`) can be slow.
 - **Rate limit**: 1,000 requests/hour with the free API key.
+
+## Security
+
+This server runs **locally** on your machine and makes **read-only** requests to the public OpenFEC API. It handles no user credentials or PII.
+
+Key practices:
+- Store your API key in `.env` only — never commit it (`.env` is in `.gitignore`)
+- API key is automatically masked in all log output (`SecretFilter`)
+- Logs rotate at 5 MB and are excluded from version control
+- Input filenames loaded from disk are restricted to an explicit allowlist
+
+For the full threat model, Skill Vetter compatibility declaration, dependency audit instructions, and how to report vulnerabilities, see [SECURITY.md](SECURITY.md).
+
+```bash
+# Audit dependencies for known CVEs
+pip-audit
+
+# Static security analysis
+bandit -r src/
+
+# Run security-focused tests
+pytest tests/test_security.py -v
+```
+
+---
 
 ## External Resources
 

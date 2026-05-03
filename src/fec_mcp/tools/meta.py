@@ -4,12 +4,20 @@ import os
 from typing import Optional
 from ..server import mcp
 
+_ALLOWED_DATA_FILES = {"help.json", "investigations.json", "glossary.json"}
+
+
 def load_json_data(filename: str) -> dict:
-    """Load JSON data from the data directory"""
+    """Load JSON data from the data directory. Only allowlisted filenames are accepted."""
+    if filename not in _ALLOWED_DATA_FILES:
+        raise ValueError(
+            f"Data file '{filename}' is not allowed. "
+            f"Must be one of: {sorted(_ALLOWED_DATA_FILES)}"
+        )
     current_dir = os.path.dirname(os.path.abspath(__file__))
     data_dir = os.path.join(os.path.dirname(current_dir), "data")
     file_path = os.path.join(data_dir, filename)
-    with open(file_path, "r") as f:
+    with open(file_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
 @mcp.tool()

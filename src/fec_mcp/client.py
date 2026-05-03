@@ -1,3 +1,4 @@
+
 import os
 import asyncio
 from typing import Optional, Dict, Any, List
@@ -49,7 +50,7 @@ class FECClient:
         for attempt in range(self.max_retries + 1):
             try:
                 async with httpx.AsyncClient() as client:
-                    logger.debug(f"Requesting {endpoint} (attempt {attempt+1})", extra={"params": params})
+                    logger.debug(f"Requesting {endpoint} (attempt {attempt+1})")
                     response = await client.get(
                         f"{self.base_url}{endpoint}",
                         params=params,
