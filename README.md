@@ -7,7 +7,7 @@
 [![FastMCP](https://img.shields.io/badge/MCP-FastMCP-orange)](https://github.com/jlowin/fastmcp)
 [![OpenFEC](https://img.shields.io/badge/API-OpenFEC-red)](https://api.open.fec.gov/developers/)
 
-*Leia isto em [Português](README.pt-br.md)*
+*Leia isto em[Português](README.pt-br.md)*
 
 An MCP server that connects the [OpenFEC API](https://api.open.fec.gov/developers/) to AI assistants, allowing you to investigate US federal campaign finance through natural conversations.
 
@@ -22,8 +22,9 @@ Designed for data journalists, researchers, and citizens who need to explore com
 - [Architecture](#architecture)
 - [Available Tools](#available-tools)
 - [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage Examples](#usage-examples)
+- [Configuration in Claude Desktop](#configuration-in-claude-desktop)
+-[Configuration in Claude Code and CLI Platforms](#configuration-in-claude-code-and-cli-platforms)
+-[Usage Examples](#usage-examples)
 - [Development and Tests](#development-and-tests)
 - [Security](#security)
 
@@ -163,6 +164,90 @@ echo "FEC_API_KEY=your_key_here" > .env
 
 ---
 
+## Configuration in Claude Desktop
+
+1. Locate your Claude Desktop configuration file:
+   - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+   - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+2. Add the server to the configuration:
+```json
+{
+  "mcpServers": {
+    "fec-finance": {
+      "command": "/absolute/path/to/.venv/bin/python",
+      "args":["/absolute/path/to/fec-mcp-server/start_server.py"],
+      "env": {
+        "FEC_API_KEY": "YOUR_FEC_API_KEY"
+      }
+    }
+  }
+}
+```
+3. Restart Claude Desktop.
+
+---
+
+## Configuration in Claude Code and CLI Platforms
+
+The MCP protocol is highly compatible with CLI-based AI agents. Here is how to set it up for terminal environments.
+
+### 1. Claude Code (Anthropic CLI)
+
+[Claude Code](https://claude.ai/code) is Anthropic's official CLI tool. You can configure the FEC MCP server globally or per project.
+
+**Method A: Using the CLI command**
+Run the following command in your terminal (make sure to replace the paths with your actual absolute paths):
+```bash
+claude mcp add fec-finance -- /absolute/path/to/.venv/bin/python /absolute/path/to/fec-mcp-server/start_server.py
+```
+*Note: You will need to ensure your `FEC_API_KEY` is exported in your terminal environment (`export FEC_API_KEY="your_key"`) before running Claude Code.*
+
+**Method B: Editing the settings file (Recommended for API Keys)**
+To ensure the API key is always loaded, edit the global config file at `~/.claude/settings.json` (or `.claude/settings.json` in your project root):
+
+```json
+{
+  "mcpServers": {
+    "fec-finance": {
+      "command": "/absolute/path/to/.venv/bin/python",
+      "args":["/absolute/path/to/fec-mcp-server/start_server.py"],
+      "env": {
+        "FEC_API_KEY": "YOUR_FEC_API_KEY"
+      }
+    }
+  }
+}
+```
+After saving, restart your `claude` session. You can verify it's working by typing `/mcp list` inside Claude Code.
+
+### 2. Google Antigravity / Gemini CLI
+
+Google's Antigravity (Gemini CLI Agent) supports MCP instances via stdio. 
+Map the server in your global user configuration directory (e.g., `%APPDATA%\.gemini\antigravity\mcp.json` on Windows or `~/.config/gemini/mcp.json` on Linux/macOS):
+
+```json
+{
+  "mcpServers": {
+    "fec-mcp": {
+      "command": "/absolute/path/to/.venv/bin/python",
+      "args":["/absolute/path/to/fec-mcp-server/start_server.py"],
+      "env": {
+        "FEC_API_KEY": "YOUR_FEC_API_KEY"
+      }
+    }
+  }
+}
+```
+
+### 3. IDEs (Cursor, Windsurf, Continue.dev)
+
+- **Cursor IDE**: Edit `~/.cursor/mcp.json`. The JSON structure is identical to Claude Desktop.
+- **Continue.dev**: Edit `.continue/config.json` in your workspace or global settings.
+- **Windsurf**: Check the official Codeium documentation for the MCP config path, using the same JSON structure.
+
+---
+
 ## Usage Examples
 
 ### Investigate a candidate
@@ -216,7 +301,7 @@ pytest tests/test_security.py -v
 
 ## External Resources
 
-- [OpenFEC API — Documentation](https://api.open.fec.gov/developers/)
+-[OpenFEC API — Documentation](https://api.open.fec.gov/developers/)
 - [FEC — Official Website](https://www.fec.gov/)
 - [OpenSecrets](https://www.opensecrets.org/)
 - [FastMCP — Documentation](https://github.com/jlowin/fastmcp)
